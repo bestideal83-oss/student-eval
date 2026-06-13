@@ -92,7 +92,7 @@ export default function Login({ isStaff, onStudentLogin, onStaffLogin, onStaffCl
               type="text"
               value={studentId}
               onChange={e => setStudentId(e.target.value)}
-              placeholder="예: 2111"
+              placeholder="예: 3131"
               autoComplete="off"
             />
           </div>
