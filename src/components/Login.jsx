@@ -14,7 +14,7 @@ export default function Login({ isStaff, onStudentLogin, onStaffLogin, onStaffCl
       if (isStaff) {
         await onStaffLogin(staffRole, password);
       } else {
-        await onStudentLogin(studentId.replace(/\s/g, ''), name.trim(), password);
+        await onStudentLogin(studentId.replace(/\s/g, '').normalize('NFKC'), name.trim(), password);
       }
     } finally {
       setLoading(false);
