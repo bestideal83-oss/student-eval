@@ -10,10 +10,6 @@ export default function Login({ isStaff, onStudentLogin, onStaffLogin, onStaffCl
   const [staffRole, setStaffRole] = useState('admin');
   const [loading, setLoading] = useState(false);
 
-  const handleIdChange = (e) => {
-    setStudentId(toHalf(e.target.value));
-  };
-
   const handleSubmit = async (e) => {
     e?.preventDefault?.();
     setLoading(true);
@@ -96,10 +92,9 @@ export default function Login({ isStaff, onStudentLogin, onStaffLogin, onStaffCl
           <div className="input-group">
             <label>학번</label>
             <input
-              type="text"
-              inputMode="numeric"
+              type="tel"
               value={studentId}
-              onChange={handleIdChange}
+              onChange={e => setStudentId(e.target.value)}
               placeholder="예: 2111"
               autoComplete="off"
             />
