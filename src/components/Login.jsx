@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 
-// 전각→반각 변환 함수
-const toHalf = (str) => str.replace(/[\uff01-\uff5e]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xfee0)).replace(/\s/g, '');
-
 export default function Login({ isStaff, onStudentLogin, onStaffLogin, onStaffClick, onBackClick }) {
   const [studentId, setStudentId] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [staffRole, setStaffRole] = useState('admin');
+  const [staffRole, setStaffRole] = useState('admin'); // admin or teacher
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -17,7 +14,7 @@ export default function Login({ isStaff, onStudentLogin, onStaffLogin, onStaffCl
       if (isStaff) {
         await onStaffLogin(staffRole, password);
       } else {
-        await onStudentLogin(toHalf(studentId), name.trim(), password);
+        await onStudentLogin(studentId.replace(/\s/g, ''), name.trim(), password);
       }
     } finally {
       setLoading(false);
@@ -92,7 +89,7 @@ export default function Login({ isStaff, onStudentLogin, onStaffLogin, onStaffCl
           <div className="input-group">
             <label>학번</label>
             <input
-              type="tel"
+              type="text"
               value={studentId}
               onChange={e => setStudentId(e.target.value)}
               placeholder="예: 2111"

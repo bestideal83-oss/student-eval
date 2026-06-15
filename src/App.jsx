@@ -100,6 +100,16 @@ export default function App() {
     } catch (err) { console.error(err); showMessage('저장 중 오류가 발생했습니다.', 'error'); }
   };
 
+  // ── 학생부 컨셉 저장 ──
+  const handleSaveConcept = async (newConcept) => {
+    try {
+      const respRef = doc(db, 'responses', currentStudent.id);
+      await updateDoc(respRef, { customConcept: newConcept });
+      setResponseData(prev => ({ ...prev, customConcept: newConcept }));
+      showMessage('학생부 컨셉이 저장되었습니다.', 'success');
+    } catch (err) { console.error(err); showMessage('저장 중 오류가 발생했습니다.', 'error'); }
+  };
+
   const handleSubmit = async () => {
     try {
       const respRef = doc(db, 'responses', currentStudent.id);
@@ -141,7 +151,7 @@ export default function App() {
         <StudentMain
           student={currentStudent} studentData={studentData} responseData={responseData}
           fieldConfig={fieldConfig}
-          onSaveSubject={handleSaveSubject} onSubmit={handleSubmit} onLogout={handleLogout}
+          onSaveSubject={handleSaveSubject} onSaveConcept={handleSaveConcept} onSubmit={handleSubmit} onLogout={handleLogout}
         />
       )}
 

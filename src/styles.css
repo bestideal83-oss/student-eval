@@ -276,6 +276,21 @@ textarea {
 .concept-value {
   color: var(--accent);
 }
+.concept-display {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.concept-edit {
+  margin-top: 4px;
+}
+.concept-edit textarea {
+  margin-bottom: 8px;
+}
+.concept-edit-btns {
+  display: flex;
+  gap: 8px;
+}
 
 /* Progress */
 .progress-bar-wrap {

@@ -99,7 +99,7 @@ export default function SubjectCard({ subject, subjectKey, response, fieldConfig
     if (field.id === 'selfEval' && field.type === 'selfEval') {
       return (
         <div className="form-section" key={field.id}>
-          <h4>{field.label} <span className="hint">(최대 2개)</span></h4>
+          <h4>{field.label} <span className="hint">(수행평가와 완전 다른 경우만 - 각 항목별 1~3줄 이내로 요약해서 간략히 제출, 최대 2개)</span></h4>
           {selfEvals.map((evalItem, idx) => {
             const hasAny = evalItem.topic || evalItem.motivation || evalItem.process || evalItem.result;
             return (

@@ -61,6 +61,7 @@ export default function TeacherDashboard({ onLogout, showMessage }) {
           studentId: student.id,
           studentName: student.name,
           hopeMajor: student.hopeMajor || '',
+          concept: responses[student.id]?.customConcept || student.concept || '',
           submitted: responses[student.id]?.submitted || false,
           resp, fd
         });
@@ -116,7 +117,7 @@ export default function TeacherDashboard({ onLogout, showMessage }) {
               <table className="student-table">
                 <thead>
                   <tr>
-                    <th>학번</th><th>성명</th><th>희망학과</th>
+                    <th>학번</th><th>성명</th><th>학생부 컨셉</th>
                     {enabledFields.map(f => <th key={f.id}>{f.label}</th>)}
                     <th>제출</th>
                   </tr>
@@ -126,7 +127,7 @@ export default function TeacherDashboard({ onLogout, showMessage }) {
                     <tr key={r.studentId}>
                       <td>{r.studentId}</td>
                       <td>{r.studentName}</td>
-                      <td>{r.hopeMajor}</td>
+                      <td className="cell-wrap">{r.concept}</td>
                       {enabledFields.map(f => <td key={f.id} className="cell-wrap">{getCellValue(r, f) || '-'}</td>)}
                       <td><span className={`submit-badge ${r.submitted ? 'done' : 'pending'}`}>{r.submitted ? '제출' : '미제출'}</span></td>
                     </tr>

@@ -469,10 +469,10 @@ export default function AdminDashboard({ onLogout, showMessage }) {
           <div className="admin-section">
             <h2>결과 엑셀 다운로드</h2>
             <div className="download-info">
-              <p>교사-교과목별로 시트가 생성됩니다. 활성화된 항목만 포함됩니다.</p>
+              <p>전체 현황 단일 시트로 생성됩니다. 자동필터(슬라이서)가 적용되어 교사·교과별 필터링이 가능합니다.</p>
               <div className="download-preview">
-                <h3>현재 활성 항목</h3>
-                <p>학번 | 성명 | 희망학과 | 학생부컨셉 | {fieldConfig.filter(f => f.enabled).map(f => f.label).join(' | ')}</p>
+                <h3>열 구성</h3>
+                <p>성명 | 구분(교과명) | 담당교사 | 학번 이름 | 학생부 컨셉 | 교과 및 활동 키워드 | 세특반영수행평가 | 부각하고 싶은 장점 | 도서 | 개별자기평가 | 생기부기재내용 | Byte</p>
               </div>
             </div>
             <button className="btn btn-primary btn-large" onClick={handleDownload} disabled={students.length === 0}>엑셀 다운로드</button>
