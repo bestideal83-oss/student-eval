@@ -14,7 +14,12 @@ export function downloadResultExcel(students, responses, fieldConfig) {
     if (!student.subjects) continue;
     const concept = responses[student.id]?.customConcept || student.concept || '';
 
+    // 과목 중복 제거 (과목명 기준)
+    const seen = new Set();
     student.subjects.forEach((subj, idx) => {
+      if (seen.has(subj.subjectName)) return;
+      seen.add(subj.subjectName);
+
       const subjectKey = `${subj.subjectName}_${idx}`;
       const resp = responses[student.id]?.subjects?.[subjectKey] || {};
       const fd = resp.formData || {};
@@ -46,8 +51,11 @@ export function downloadTeacherExcel(students, responses, teacherName, fieldConf
     if (!student.subjects) continue;
     const concept = responses[student.id]?.customConcept || student.concept || '';
 
+    const seen = new Set();
     student.subjects.forEach((subj, idx) => {
       if (subj.teacherName !== teacherName) return;
+      if (seen.has(subj.subjectName)) return;
+      seen.add(subj.subjectName);
       const subjectKey = `${subj.subjectName}_${idx}`;
       const resp = responses[student.id]?.subjects?.[subjectKey] || {};
       const fd = resp.formData || {};

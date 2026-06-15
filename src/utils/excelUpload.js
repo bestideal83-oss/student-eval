@@ -145,6 +145,16 @@ export function parseUploadedExcel(file) {
           });
         }
 
+        // 학생별 과목 중복 제거
+        for (const student of Object.values(studentMap)) {
+          const seen = new Set();
+          student.subjects = student.subjects.filter(subj => {
+            if (seen.has(subj.subjectName)) return false;
+            seen.add(subj.subjectName);
+            return true;
+          });
+        }
+
         const result = Object.values(studentMap).filter(s => s.subjects.length > 0);
         result.sort((a, b) => a.id.localeCompare(b.id));
 
