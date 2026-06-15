@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 
+// 전각→반각 변환 함수
+const toHalf = (str) => str.replace(/[\uff01-\uff5e]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xfee0)).replace(/\s/g, '');
+
 export default function Login({ isStaff, onStudentLogin, onStaffLogin, onStaffClick, onBackClick }) {
   const [studentId, setStudentId] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [staffRole, setStaffRole] = useState('admin'); // admin or teacher
+  const [staffRole, setStaffRole] = useState('admin');
   const [loading, setLoading] = useState(false);
+
+  const handleIdChange = (e) => {
+    setStudentId(toHalf(e.target.value));
+  };
 
   const handleSubmit = async (e) => {
     e?.preventDefault?.();
@@ -14,7 +21,7 @@ export default function Login({ isStaff, onStudentLogin, onStaffLogin, onStaffCl
       if (isStaff) {
         await onStaffLogin(staffRole, password);
       } else {
-        await onStudentLogin(studentId.replace(/\s/g, '').normalize('NFKC'), name.trim(), password);
+        await onStudentLogin(toHalf(studentId), name.trim(), password);
       }
     } finally {
       setLoading(false);
@@ -90,9 +97,10 @@ export default function Login({ isStaff, onStudentLogin, onStaffLogin, onStaffCl
             <label>학번</label>
             <input
               type="text"
+              inputMode="numeric"
               value={studentId}
-              onChange={e => setStudentId(e.target.value)}
-              placeholder="예: 3131"
+              onChange={handleIdChange}
+              placeholder="예: 2111"
               autoComplete="off"
             />
           </div>
