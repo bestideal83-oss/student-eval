@@ -5,7 +5,7 @@ import PasswordChange from './components/PasswordChange.jsx';
 import StudentMain from './components/StudentMain.jsx';
 import AdminDashboard from './components/AdminDashboard.jsx';
 import TeacherDashboard from './components/TeacherDashboard.jsx';
-import { DEFAULT_FIELD_CONFIG } from './utils/fieldConfig.js';
+import { DEFAULT_FIELD_CONFIG, mergeFieldConfig } from './utils/fieldConfig.js';
 import './styles.css';
 
 export default function App() {
@@ -34,7 +34,7 @@ export default function App() {
       });
     }
     const data = (await getDoc(configRef)).data();
-    if (data.fieldConfig) setFieldConfig(data.fieldConfig);
+    if (data.fieldConfig) setFieldConfig(mergeFieldConfig(data.fieldConfig));
     return data;
   };
 

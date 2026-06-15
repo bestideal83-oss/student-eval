@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db, collection, doc, getDoc, setDoc, getDocs, updateDoc, writeBatch } from '../firebase.js';
 import { parseUploadedExcel } from '../utils/excelUpload.js';
 import { downloadResultExcel } from '../utils/excelDownload.js';
-import { DEFAULT_FIELD_CONFIG, generateCustomId } from '../utils/fieldConfig.js';
+import { DEFAULT_FIELD_CONFIG, generateCustomId, mergeFieldConfig } from '../utils/fieldConfig.js';
 
 export default function AdminDashboard({ onLogout, showMessage }) {
   const [tab, setTab] = useState('upload');
@@ -42,7 +42,12 @@ export default function AdminDashboard({ onLogout, showMessage }) {
       if (configSnap.exists()) {
         const data = configSnap.data();
         setDeadline(data.deadline || '');
-        if (data.fieldConfig) setFieldConfig(data.fieldConfig);
+        if (data.fieldConfig) {
+          const merged = mergeFieldConfig(data.fieldConfig);
+          setFieldConfig(merged);
+          // 라벨 변경 자동 반영
+          await updateDoc(doc(db, 'config', 'system'), { fieldConfig: merged });
+        }
       }
     } catch (err) {
       console.error(err);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db, collection, doc, getDoc, getDocs } from '../firebase.js';
 import { downloadTeacherExcel } from '../utils/excelDownload.js';
-import { DEFAULT_FIELD_CONFIG, getEnabledFields } from '../utils/fieldConfig.js';
+import { DEFAULT_FIELD_CONFIG, getEnabledFields, mergeFieldConfig } from '../utils/fieldConfig.js';
 
 export default function TeacherDashboard({ onLogout, showMessage }) {
   const [students, setStudents] = useState([]);
@@ -29,7 +29,7 @@ export default function TeacherDashboard({ onLogout, showMessage }) {
       // fieldConfig 로드
       const configSnap = await getDoc(doc(db, 'config', 'system'));
       if (configSnap.exists() && configSnap.data().fieldConfig) {
-        setFieldConfig(configSnap.data().fieldConfig);
+        setFieldConfig(mergeFieldConfig(configSnap.data().fieldConfig));
       }
 
       const names = new Set();
